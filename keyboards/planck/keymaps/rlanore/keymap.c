@@ -33,7 +33,8 @@ enum planck_keycodes {
   TMUX,
   LWORD,
   RWORD,
-  WBKSP,
+  ABKSP,
+  CBKSP,
   CBL
 };
 
@@ -84,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |   ~  |   &  |   é  |   "  |   '  |   (  |   )  |   è  |   _  |   ç  |   à  |WBKSP |
+ * |   ~  |   &  |   é  |   "  |   '  |   (  |   )  |   è  |   _  |   ç  |   à  |ABKSP |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Del  |   >  |  %   |  ;   |  F2  |   [  |   ]  |   -  |   *  |   @  |   $  |  #   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -94,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    FR_TILD, FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN, FR_RPRN, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV, WBKSP,
+    FR_TILD, FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN, FR_RPRN, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV, ABKSP,
     KC_DEL,  FR_RABK, FR_PERC, FR_SCLN, KC_F2,   FR_LBRC, FR_RBRC, FR_MINS, FR_ASTR, FR_AT,   FR_DLR,  FR_HASH,
     _______, FR_LABK, FR_QUES, FR_BSLS, KC_F4,   FR_LCBR, FR_RCBR, FR_PIPE, FR_PLUS, FR_EXLM, FR_CIRC, FR_EQL,
    _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, _______, KC_END
@@ -102,9 +103,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |WBKSP |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |CBKSP |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  | ```  |  F5  |  F6  |  LW  |  RW  |   [  |   ]  |  \   |
+ * | Del  |  F1  |  F2  |  F3  | ```  |  F5  |  LW  | DOWN |  UP  |  RW  |   ]  |  \   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |Pg Up |Pg Dn |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -112,15 +113,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
-    FR_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,    FR_8,    FR_9,    FR_0,    WBKSP,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   CBL,   KC_F5,   KC_F6,   LWORD,   RWORD,   KC_LBRC, KC_RBRC, KC_BSLS,
+    FR_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,    FR_8,    FR_9,    FR_0,    CBKSP,
+    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   CBL,     KC_F5,   LWORD,   KC_DOWN, KC_UP,   RWORD,   KC_RBRC, KC_BSLS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 /* NUMPAD ( LPAD  )
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   /  |WBKSP |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   /  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |   4  |   5  |   6  |   +  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -130,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_NUMPAD] = LAYOUT_planck_grid(
-    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,   FR_8, FR_9,   FR_SLSH, WBKSP,
+    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,   FR_8, FR_9,   FR_SLSH,      ,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_4,   FR_5, FR_6,   FR_PLUS, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_1,   FR_2, FR_3,   FR_MINS, XXXXXXX,
     _______, _______, _______, _______, _______, _______, _______, FR_EQL, FR_0, FR_DOT, FR_ASTR, _______
@@ -138,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Function Key ( ??? )
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   /  |WBKSP |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   /  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |   4  |   5  |   6  |   +  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -148,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_FUNCTION] = LAYOUT_planck_grid(
-    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7, FR_8,   FR_9,    FR_SLSH, WBKSP,
+    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7, FR_8,   FR_9,    FR_SLSH,      ,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_4, FR_5,   FR_6,    FR_PLUS, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_1, FR_2,   FR_3,    FR_MINS, XXXXXXX,
     _______, _______, _______, _______, _______, _______, FR_EQL,  FR_0, FR_DOT, FR_ASTR, _______, _______
@@ -199,28 +200,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case LWORD:
       if (record->event.pressed) {
-        register_code(KC_LALT);
+        register_code(KC_LCTL);
         register_code(KC_LEFT);
         unregister_code(KC_LEFT);
-        unregister_code(KC_LALT);
+        unregister_code(KC_LCTL);
       }
       return false;
       break;
     case RWORD:
       if (record->event.pressed) {
-        register_code(KC_LALT);
+        register_code(KC_LCTL);
         register_code(KC_RGHT);
         unregister_code(KC_RGHT);
-        unregister_code(KC_LALT);
+        unregister_code(KC_LCTL);
       }
       return false;
       break;
-    case WBKSP:
+    case ABKSP:
       if (record->event.pressed) {
         register_code(KC_LALT);
         register_code(KC_BSPC);
         unregister_code(KC_BSPC);
         unregister_code(KC_LALT);
+      }
+      return false;
+      break;
+    case CBKSP:
+      if (record->event.pressed) {
+        register_code(KC_LCTL);
+        register_code(KC_BSPC);
+        unregister_code(KC_BSPC);
+        unregister_code(KC_LCTL);
       }
       return false;
       break;
