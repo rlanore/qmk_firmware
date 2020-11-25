@@ -226,12 +226,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case CBL:
       if (record->event.pressed) {
-        register_code(FR_GRV);
-        unregister_code(FR_GRV);
-        register_code(FR_GRV);
-        unregister_code(FR_GRV);
-        register_code(FR_GRV);
-        unregister_code(FR_GRV);
+        int i;
+        for (i = 0; i < 3; ++i) {
+          register_code(KC_RALT);
+          register_code(KC_7);
+          unregister_code(KC_7);
+          unregister_code(KC_RALT);
+          register_code(KC_SPACE);
+          unregister_code(KC_SPACE);
+        }
       }
       return false;
       break;
