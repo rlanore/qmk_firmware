@@ -30,25 +30,31 @@ enum planck_layers {
 
 enum planck_keycodes {
   AZERTY = SAFE_RANGE,
-  TMUX,
-  LWORD,
-  RWORD,
-  ABKSP,
-  CBKSP,
-  CBL
+  TMUXG, // Send Ctrl+space when tap, Left-GUI when hold
+  LWORD, // Send Left Ctrl and left. Moving cursor to left word
+  RWORD, // Send Left Ctrl and right. Moving cursor to right word
+  EBKSP, // Send key sequence \ed,ESC+d to delete forward word into bash binding
+  CBKSP, // Send  Ctrl+Backspace to delete backward word
+  CBL,   // Send three back tick to block of code into md and teams app
+  SPSCR  // Space when tap, Left Ctrl on hold
 };
 
 // Tap Dance declarations
 //enum {
+  //ESCHOME,
+  //BSPCEND
   //MP,
   //CS,
   //DC,
   //SE,
   //PE
-//};
+////};
 
 // Tap Dance definitions
 //qk_tap_dance_action_t tap_dance_actions[] = {
+  // Tap once for Escape, twice for HOME
+  //[ESCHOME] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_HOME),
+  //[BSPCEND] = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, KC_END)
   // Tap once for Escape, twice for Caps Lock
   //[MP] = ACTION_TAP_DANCE_DOUBLE(FR_MINS, FR_PLUS),
   //[CS] = ACTION_TAP_DANCE_DOUBLE(FR_COMM, FR_DOT),
@@ -61,7 +67,7 @@ enum planck_keycodes {
 #define RAISE MO(_RAISE)
 #define SHFCAP MT(MOD_LSFT,KC_CAPS)
 #define CTLSPC MT(MOD_LCTL, KC_SPACE)
-#define LPAD LT(_NUMPAD,KC_F)
+#define LPAD LT(_NUMPAD,KC_TAB)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -73,49 +79,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |SHFCAP|   W  |   X  |   C  |   V  |   B  |   N  |   .  |  :   |   ,  |   /  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | Alt  | GUI  | TMUX |Lower | LCTL/Space  |Raise | Left | Down |  Up  |Right |
+ * | Ctrl | Alt  | GUI  |TMUXG |Lower | LCTL/Space  |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
-[_AZERTY] = LAYOUT_planck_grid(
-    KC_ESC,  FR_A,    FR_Z,    KC_E, KC_R,  KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_TAB,  FR_Q,    KC_S,    KC_D, LPAD,  KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    FR_M,    KC_ENT,
-    SHFCAP,  FR_W,    KC_X,    KC_C, KC_V,  KC_B,   KC_N,   FR_DOT, FR_COLN, FR_COMM, FR_SLSH, KC_RSFT,
-    KC_LCTL, KC_LALT, KC_LGUI, TMUX, LOWER, CTLSPC, CTLSPC, RAISE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
-),
+  [_AZERTY] = LAYOUT_planck_grid(
+    KC_ESC,  FR_A,    FR_Z,    KC_E,  KC_R,  KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
+    LPAD,    FR_Q,    KC_S,    KC_D,  KC_F,  KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    FR_M,    KC_ENT,
+    SHFCAP,  FR_W,    KC_X,    KC_C,  KC_V,  KC_B,   KC_N,   FR_DOT, FR_COLN, FR_COMM, FR_SLSH, KC_RSFT,
+    KC_LCTL, KC_LALT, KC_LGUI, TMUXG, LOWER, CTLSPC, CTLSPC, RAISE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  ),
 
-/* Lower
- * ,-----------------------------------------------------------------------------------.
- * |   ~  |   &  |   é  |   "  |   '  |   (  |   )  |   è  |   _  |   ç  |   à  |ABKSP |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |   >  |  %   |  ;   |  F2  |   [  |   ]  |   -  |   *  |   @  |   $  |  #   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   <  |  ?   |  \   |  F4  |   {  |   }  |   |  |   +  |   !  |   ^  |  =   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Home |      |      | End  |
- * `-----------------------------------------------------------------------------------'
- */
-[_LOWER] = LAYOUT_planck_grid(
-    FR_TILD, FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN, FR_RPRN, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV, ABKSP,
+  /* Lower
+   * ,-----------------------------------------------------------------------------------.
+   * |   ~  |   &  |   é  |   "  |   '  |   (  |   )  |   è  |   _  |   ç  |   à  |CBKSP |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * | Del  |   >  |   %  |  ;   |  F2  |   [  |   ]  |   -  |   *  |   @  |   $  |  #   |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * |      |   <  |   ?  |  \   |  F4  |   {  |   }  |   |  |   +  |   !  |   ^  |  =   |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * |      |      |      |      |      |             |      | Home |      |      | End  |
+   * `-----------------------------------------------------------------------------------'
+   */
+  [_LOWER] = LAYOUT_planck_grid(
+    FR_TILD, FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN, FR_RPRN, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV, CBKSP,
     KC_DEL,  FR_RABK, FR_PERC, FR_SCLN, KC_F2,   FR_LBRC, FR_RBRC, FR_MINS, FR_ASTR, FR_AT,   FR_DLR,  FR_HASH,
     _______, FR_LABK, FR_QUES, FR_BSLS, KC_F4,   FR_LCBR, FR_RCBR, FR_PIPE, FR_PLUS, FR_EXLM, FR_CIRC, FR_EQL,
-   _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, _______, KC_END
-),
+    _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, _______, KC_END
+  ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |CBKSP |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |EBKSP |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  | ```  |  F5  |  LW  | DOWN |  UP  |  RW  |   ]  |  \   |
+ * | Del  |      |SPrint|Print | ```  |   /  |  LW  | DOWN |  UP  |  RW  |   ]  |  \   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |Pg Up |Pg Dn |      |
+ * |      |      |      |      |      |   ?  |  F12 |ISO # |ISO / |Pg Up |Pg Dn |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
-[_RAISE] = LAYOUT_planck_grid(
-    FR_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,    FR_8,    FR_9,    FR_0,    CBKSP,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   CBL,     KC_F5,   LWORD,   KC_DOWN, KC_UP,   RWORD,   KC_RBRC, KC_BSLS,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______,
+
+  [_RAISE] = LAYOUT_planck_grid(
+    FR_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,    FR_8,    FR_9,    FR_0,    EBKSP,
+    KC_DEL,  _______, SPSCR,   KC_PSCR, CBL,     FR_SLSH, LWORD,   KC_DOWN, KC_UP,   RWORD,   KC_RBRC, FR_BSLS,
+    _______, _______, _______, _______, _______, FR_QUES, KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -130,12 +137,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |   =  |   0  |   .  |   *  |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_NUMPAD] = LAYOUT_planck_grid(
-    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,   FR_8, FR_9,   FR_SLSH,      ,
+  [_NUMPAD] = LAYOUT_planck_grid(
+    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7,   FR_8, FR_9,   FR_SLSH, KC_BSPC,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_4,   FR_5, FR_6,   FR_PLUS, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_1,   FR_2, FR_3,   FR_MINS, XXXXXXX,
     _______, _______, _______, _______, _______, _______, _______, FR_EQL, FR_0, FR_DOT, FR_ASTR, _______
-),
+  ),
 
 /* Function Key ( ??? )
  * ,-----------------------------------------------------------------------------------.
@@ -148,12 +155,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |   =  |   0  |   .  |   *  |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_FUNCTION] = LAYOUT_planck_grid(
-    KC_GRV,  FR_1,    FR_2,    FR_3,    FR_4,    FR_5,    FR_6,    FR_7, FR_8,   FR_9,    FR_SLSH,      ,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_4, FR_5,   FR_6,    FR_PLUS, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, FR_1, FR_2,   FR_3,    FR_MINS, XXXXXXX,
-    _______, _______, _______, _______, _______, _______, FR_EQL,  FR_0, FR_DOT, FR_ASTR, _______, _______
-),
+  [_FUNCTION] = LAYOUT_planck_grid(
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  ),
 
 /* Adjust (Lower + Raise)
  *                      v------------------------RGB CONTROL--------------------v
@@ -167,12 +174,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_ADJUST] = LAYOUT_planck_grid(
+  [_ADJUST] = LAYOUT_planck_grid(
     _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
     _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, AZERTY,  _______,  _______, _______, _______,
     _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
-)
+  )
 
 };
 
@@ -180,6 +187,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+uint16_t key_timer;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case AZERTY:
@@ -189,13 +197,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case TMUX:
-      if (record->event.pressed) {
-        register_code(KC_LCTL);
-        register_code(KC_SPACE);
-        unregister_code(KC_LCTL);
-        unregister_code(KC_SPACE);
+    case TMUXG:
+      if (record->event.pressed) { 
+        key_timer = timer_read(); 
+        register_code(KC_LGUI); 
+      } 
+      else { 
+        unregister_code(KC_LGUI); 
+        if (timer_elapsed(key_timer) < TAPPING_TERM) { 
+          register_code(KC_LCTL);
+          register_code(KC_SPACE);
+          unregister_code(KC_LCTL);
+          unregister_code(KC_SPACE);
+        } 
       }
+      //if (record->event.pressed) {
+      //  register_code(KC_LCTL);
+      //  register_code(KC_SPACE);
+      //  unregister_code(KC_LCTL);
+      //  unregister_code(KC_SPACE);
+      //}
       return false;
       break;
     case LWORD:
@@ -216,12 +237,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case ABKSP:
+    case EBKSP:
       if (record->event.pressed) {
-        register_code(KC_LALT);
-        register_code(KC_BSPC);
-        unregister_code(KC_BSPC);
-        unregister_code(KC_LALT);
+        register_code(KC_ESC);
+        unregister_code(KC_ESC);
+        register_code(KC_D);
+        unregister_code(KC_D);
       }
       return false;
       break;
@@ -245,6 +266,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           register_code(KC_SPACE);
           unregister_code(KC_SPACE);
         }
+      }
+      return false;
+      break;
+    case SPSCR:
+      if (record->event.pressed) {
+          register_code(KC_LSFT);
+          tap_code(KC_PSCR);
+          unregister_code(KC_LSFT);
       }
       return false;
       break;
