@@ -36,7 +36,7 @@ enum planck_keycodes {
   EBKSP, // Send key sequence \ed,ESC+d to delete forward word into bash binding
   CBKSP, // Send  Ctrl+Backspace to delete backward word
   CBL,   // Send three back tick to block of code into md and teams app
-  SPSCR  // Space when tap, Left Ctrl on hold
+  SPSCR  // Space print screen
 };
 
 // Tap Dance declarations

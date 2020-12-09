@@ -5,26 +5,26 @@ Based on default with some update for my work.
 What use at work
 
 * Command line a lot
+* bash
 * Tmux
 * Vim
 
 Some adding keycode
 
-* TMUX:  To send Ctrl + Space as is my prefix
-* LWORD: To send Ctrl + Left arrow. Goto begin of word on command line
-* RWORD: To send Ctrl + Righ arrow. Goto end of word on command line 
-* WBKSP: To send left Alt + Backspace. Delete word
-* CBL:   To send three back tick like md block code
+* TMUXG, // Send Ctrl+space when tap, Left-GUI when hold
+* LWORD, // Send Left Ctrl and left. Moving cursor to left word
+* RWORD, // Send Left Ctrl and right. Moving cursor to right word
+* EBKSP, // Send key sequence \ed,ESC+d to delete forward word into bash binding
+* CBKSP, // Send Ctrl+Backspace to delete backward word
+* CBL,   // Send three back tick to block of code into md and teams app
+* SPSCR  // Send print screen
 
 Some Mod-Tap
 
 * SHFCAP: Left Shift on held. CapsLok on tap
 * CTLSPC: Left Ctrl on held. Space on tap
-* 
 
 Some Layer-Tap
 
 * LPAD: Jump to NUMPAD layer on held. Mapped to F
-
-
 
